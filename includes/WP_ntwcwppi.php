@@ -96,7 +96,7 @@ class WP_ntwcwppi
 
           var $form = $(this);
           
-          var data = JSON.stringify($form.serializeArray());
+          var data = JSON.parse(JSON.stringify($form.serializeArray()))
           console.log(data);
         });
       </script>
