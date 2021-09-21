@@ -3,7 +3,7 @@
 class WP_ntwcwppi {
     public function run()
     {
-echo "TEST";
+//echo "TEST";
         // Activation Hook
 //        register_activation_hook( __FILE__, array($this, 'ntwcwppi_createAuthTokens'));
 
@@ -19,41 +19,41 @@ echo "TEST";
         // add_action( 'admin_menu', 'extra_post_info_menu' );
     }
 
-    private function ntwcwppi_createAuthTokens()
-    {
-        $ntwcwp_current_url = "https://$_SERVER[HTTP_HOST]";
+  //  private function ntwcwppi_createAuthTokens()
+   // {
+     //   $ntwcwp_current_url = "https://$_SERVER[HTTP_HOST]";
+//
+  //      $endpoint = '/wc-auth/v1/authorize';
+//
+  //      $params = [
+    //        'app_name' = 'NT Woocommerce Product Importer', // Auto Generated name for package.
+      //      'scope' => 'r>ead_write',
+        //    'user_id' => get_current_user_id(), // Current Logged in Userid
+          //  'return_url' => $ntwcwp_current_url,
+            //'callback_url' => $ntwcwp_current_url . '/wp-json/ntwcwppi/v1/authorized' //Callback URL for storing data.
+       // ];
 
-        $endpoint = '/wc-auth/v1/authorize';
+        //$authentication_url = $ntwcwp_current_url . $endpoint . '?' . http_build_query($params);
 
-        $params = [
-            'app_name' = 'NT Woocommerce Product Importer', // Auto Generated name for package.
-            'scope' => 'r>ead_write',
-            'user_id' => get_current_user_id(), // Current Logged in Userid
-            'return_url' => $ntwcwp_current_url,
-            'callback_url' => $ntwcwp_current_url . '/wp-json/ntwcwppi/v1/authorized' //Callback URL for storing data.
-        ];
+        //exit(wp_redirect($authentication_url));
+   // }
 
-        $authentication_url = $ntwcwp_current_url . $endpoint . '?' . http_build_query($params);
+   // private function ntwcwppi_saveAuthorization()
+   // {
+    //    $requiredFields = ['key_id', 'user_id', 'consumer_key', 'consumer_secret', 'key_permissions'];
+     //   $dataToStore = [];
 
-        exit(wp_redirect($authentication_url));
-    }
-
-    private function ntwcwppi_saveAuthorization()
-    {
-        $requiredFields = ['key_id', 'user_id', 'consumer_key', 'consumer_secret', 'key_permissions'];
-        $dataToStore = [];
-
-        foreach($_POST as $key => $value) {
-            if(in_array($key, $requiredFields)) {
-                $dataToStore[$key] = $value;
-            }
-        }
+       // foreach($_POST as $key => $value) {
+         //   if(in_array($key, $requiredFields)) {
+           //     $dataToStore[$key] = $value;
+           // }
+       // }
 
         // Skip storing the credentials to avoid clutter.
-        if(empty($dataToStore)) {
-            exit;
-        }
+      //  if(empty($dataToStore)) {
+         //   exit;
+       // }
 
-        add_option("ntwcwppi_rest", json_encode($dataToStore));
-    }
+     //   add_option("ntwcwppi_rest", json_encode($dataToStore));
+   // }
 }
