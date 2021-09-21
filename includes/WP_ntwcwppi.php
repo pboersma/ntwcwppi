@@ -2,23 +2,27 @@
 
 class WP_ntwcwppi
 {
-  public function __construct()
-  {
-    // Activation Hook
-    register_activation_hook(__FILE__, array($this, 'ntwcwppi_createAuthTokens'));
+  private $plugin;
 
-    // Register API Route for saving Authorization Token.
-    add_action('rest_api_init', function () {
-      register_rest_route('ntwcwppi/v1', '/authorized', array(
-        'methods' => 'POST',
-        'callback' => array($this, 'ntwcwppi_saveAuthorization'),
-      ));
-    });
+  public function __construct($plugin)
+  {
+   $this->plugin = $plugin;
   }
+
   public function run()
   {
-    // CRUD Menu for Product Importer UI
-    //add_action( 'admin_menu', 'extra_post_info_menu' );
+    var_dump($this->plugin);
+    // register_activation_hook(__FILE__, array($this, 'ntwcwppi_createAuthTokens'));
+
+    // // Register API Route for saving Authorization Token.
+    // add_action('rest_api_init', function () {
+    //   register_rest_route('ntwcwppi/v1', '/authorized', array(
+    //     'methods' => 'POST',
+    //     'callback' => array($this, 'ntwcwppi_saveAuthorization'),
+    //   ));
+    // });
+    // // CRUD Menu for Product Importer UI
+    // //add_action( 'admin_menu', 'extra_post_info_menu' );
   }
 
   public function ntwcwppi_createAuthTokens()
