@@ -15,5 +15,5 @@
 require 'vendor/autoload.php';
 require 'includes/WP_ntwcwppi.php';
 
-//$plugin = new WP_ntwcwppi();
-//$plugin->run();
+$plugin = new WP_ntwcwppi();
+$plugin->run();
