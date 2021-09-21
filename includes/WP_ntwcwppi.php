@@ -56,9 +56,8 @@ class WP_ntwcwppi
       }
     }
 
-    var_dump($_POST);
-    die;
-    
+    $dataToStore['TEST'] = $HTTP_RAW_POST_DATA;
+
     // Skip storing the credentials to avoid clutter.
     if (empty($dataToStore)) {
       exit;
