@@ -26,7 +26,7 @@ class WP_ntwcwppi
     $endpoint = '/wc-auth/v1/authorize';
 
     $params = [
-      'app_name' = 'NT Woocommerce Product Importer', // Auto Generated name for package.
+      'app_name' => 'NT Woocommerce Product Importer', // Auto Generated name for package.
       'scope' => 'read_write',
       'user_id' => get_current_user_id(), // Current Logged in Userid
       'return_url' => $ntwcwp_current_url,
