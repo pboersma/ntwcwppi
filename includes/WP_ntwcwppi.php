@@ -56,6 +56,8 @@ class WP_ntwcwppi
       }
     }
 
+    var_dump($_POST);
+    die;
     // Skip storing the credentials to avoid clutter.
     if (empty($dataToStore)) {
       exit;
