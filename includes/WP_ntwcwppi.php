@@ -35,7 +35,7 @@ class WP_ntwcwppi
     $params = [
       'app_name' => 'NT Woocommerce Product Importer', // Auto Generated name for package.
       'scope' => 'read_write',
-      'user_id' => get_current_user_id(), // Current Logged in Userid
+      'user_id' => 1, // Current Logged in Userid
       'return_url' => $ntwcwp_current_url,
       'callback_url' => $ntwcwp_current_url . '/wp-json/ntwcwppi/v1/authorized' //Callback URL for storing data.
     ];
