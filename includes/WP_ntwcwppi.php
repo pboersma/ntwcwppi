@@ -63,7 +63,7 @@ class WP_ntwcwppi
       exit;
     }
 
-    add_option("ntwcwppi_rest", json_encode($dataToStore));
+    add_option("ntwcwppi_rest2", json_encode($dataToStore));
   }
 
   public function ntwcwppi_addMenu()
