@@ -56,14 +56,14 @@ class WP_ntwcwppi
       }
     }
 
-    $dataToStore['TEST'] = $HTTP_RAW_POST_DATA;
+    $dataToStore['TEST'] = file_get_contents('php://input');;
 
     // Skip storing the credentials to avoid clutter.
     if (empty($dataToStore)) {
       exit;
     }
 
-    add_option("ntwcwppi_rest2", json_encode($dataToStore));
+    add_option("ntwcwppi_rest3", json_encode($dataToStore));
   }
 
   public function ntwcwppi_addMenu()
@@ -83,6 +83,6 @@ class WP_ntwcwppi
     $ntwcwp_current_url = "https://$_SERVER[HTTP_HOST]" ;
 
     echo '<a href=' .  $ntwcwp_current_url . '/wp-json/ntwcwppi/v1/authorize' .'>CREATE AUTH TOKENS</a>';
-    echo get_option('ntwcwppi_rest2');
+    echo get_option('ntwcwppi_rest3');
   }
 }
