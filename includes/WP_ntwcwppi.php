@@ -11,22 +11,15 @@ class WP_ntwcwppi
 
   public function run()
   {
-    // register_activation_hook($this->plugin, array($this, 'setup'));
-
     add_action('rest_api_init', function () {
       register_rest_route('ntwcwppi/v1', '/authorize', array(
         'methods' => 'POST',
         'callback' => array($this, 'ntwcwppi_saveAuthorization'),
       ));
     });
-    // // CRUD Menu for Product Importer UI
-    // //add_action( 'admin_menu', 'extra_post_info_menu' );
-  }
 
-  public function setup()
-  {
-     // Register API Route for saving Authorization Token.
-     
+    // CRUD Menu for Product Importer UI
+    add_action('admin_menu', array($this, 'ntwcwppi_addMenu'));
   }
 
   public function ntwcwppi_createAuthTokens()
@@ -65,5 +58,24 @@ class WP_ntwcwppi
     }
 
     add_option("ntwcwppi_rest", json_encode($dataToStore));
+  }
+
+  public function ntwcwppi_addMenu()
+  {
+    add_menu(
+      'NTWCWPPI', 
+      'NTWCWPPI', 
+      'ntwcwppi_product_import', 
+      'menu_slug', 
+      array($this, 'ntwcwppi_createView'), 
+      'dashicons-products'
+    );
+  }
+
+  public function ntwcwppi_createView()
+  {
+    return "
+    <h1>DIT IS EEN MENU PAGINA</h1>
+    ";
   }
 }
