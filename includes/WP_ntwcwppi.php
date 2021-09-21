@@ -83,6 +83,6 @@ class WP_ntwcwppi
     $ntwcwp_current_url = "https://$_SERVER[HTTP_HOST]" ;
 
     echo '<a href=' .  $ntwcwp_current_url . '/wp-json/ntwcwppi/v1/authorize' .'>CREATE AUTH TOKENS</a>';
-    echo get_option('ntwcwppi_rest');
+    echo get_option('ntwcwppi_rest2');
   }
 }
