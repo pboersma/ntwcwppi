@@ -80,7 +80,30 @@ class WP_ntwcwppi
   {
     $ntwcwp_current_url = "https://$_SERVER[HTTP_HOST]" ;
 
-    echo '<a href=' .  $ntwcwp_current_url . '/wp-json/ntwcwppi/v1/authorize' .'>CREATE AUTH TOKENS</a>';
-    echo get_option('ntwcwppi_rest4');
+    // https://deeekhoorn.com/nl/feed/products/json
+    echo '
+      <h1>Add Data Feed</h1>
+      <form id="addDataFeed">
+        <input type="text" name="json-data-url" />
+        <input type="text" name="username" />
+        <input type="text" name="password" />
+        <input type="submit" value="Add Datafeed" />
+      </form>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+      <script>
+        $("#addDataFeed").submit(function(event){
+          event.preventDefault();
+
+          var $form = $(this);
+          
+          var serializedData = $form.serialize();
+          console.log(serializedData);
+        });
+      </script>
+    ';
+
+    // echo '<form></form>'
+    // echo '<a href=' .  $ntwcwp_current_url . '/wp-json/ntwcwppi/v1/authorize' .'>CREATE AUTH TOKENS</a>';
+    // echo get_option('ntwcwppi_rest4');
   }
 }
