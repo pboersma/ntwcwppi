@@ -4,18 +4,38 @@ class WP_ntwcwppi
 {
   private $plugin;
 
+  private $usedKeys = [
+    'ntwcwppi_rest'
+  ];
+
   public function __construct($plugin)
   {
    $this->plugin = $plugin;
   }
 
+  /**
+   * Bootstrap / Init Product Importer Plugin.
+   * 
+   * @return void
+   */
   public function run()
   {
     add_action('rest_api_init', function () {
+      /**
+       * Authorization Callback URL for storing auth token.
+       *
+       * @TODO: permission_callback setup
+       */
       register_rest_route('ntwcwppi/v1', '/authorized', array(
         'methods' => 'POST',
         'callback' => array($this, 'ntwcwppi_saveAuthorization'),
       ));
+
+      /**
+       * Authorize Rest API URL through WooCommerce.
+       *
+       * @TODO: permission_callback setup
+       */
       register_rest_route('ntwcwppi/v1', '/authorize', array(
         'methods' => 'GET',
         'callback' => array($this, 'ntwcwppi_createAuthTokens'),
@@ -24,8 +44,17 @@ class WP_ntwcwppi
 
     // CRUD Menu for Product Importer UI
     add_action('admin_menu', array($this, 'ntwcwppi_addMenu'));
+
+    // Wordpress deactivation hook for cleanup.
+    register_deactivation_hook($this->plugin, array($this, 'ntwcwppi_cleanUp'));
   }
 
+  /**
+   * Create Authorization Tokens through the WooCommerce REST API,
+   * And send data to saveAuthorization Callback JSON Rest URL.
+   * 
+   * @return void
+   */
   public function ntwcwppi_createAuthTokens()
   {
     $ntwcwp_current_url = "https://$_SERVER[HTTP_HOST]";
@@ -45,6 +74,11 @@ class WP_ntwcwppi
     exit(wp_redirect($authentication_url));
   }
 
+  /**
+   * Function for Saving Authorization data from WooCommerce Rest API.
+   * 
+   * @return void
+   */
   public function ntwcwppi_saveAuthorization()
   {
     $requiredFields = ['key_id', 'user_id', 'consumer_key', 'consumer_secret', 'key_permissions'];
@@ -56,14 +90,20 @@ class WP_ntwcwppi
         $dataToStore[$key] = $value;
       }
     }
+
     // Skip storing the credentials to avoid clutter.
     if (empty($dataToStore)) {
       exit;
     }
 
-    add_option("ntwcwppi_rest4", json_encode($dataToStore));
+    add_option("ntwcwppi_rest", json_encode($dataToStore));
   }
 
+  /**
+   * Initialize NTWCWPPI Menu.
+   * 
+   * @return void
+   */
   public function ntwcwppi_addMenu()
   {
     add_menu_page(
@@ -76,11 +116,16 @@ class WP_ntwcwppi
     );
   }
 
+  /**
+   * Create View
+   * 
+   * @return void
+   */
   public function ntwcwppi_createView()
   {
     $ntwcwp_current_url = "https://$_SERVER[HTTP_HOST]" ;
+    echo '<a href=' .  $ntwcwp_current_url . '/wp-json/ntwcwppi/v1/authorize' .'>CREATE AUTH TOKENS</a>';
 
-    // https://deeekhoorn.com/nl/feed/products/json
     echo '
       <h1>Add Data Feed</h1>
       <form id="addDataFeed">
@@ -102,8 +147,13 @@ class WP_ntwcwppi
       </script>
     ';
 
-    // echo '<form></form>'
-    // echo '<a href=' .  $ntwcwp_current_url . '/wp-json/ntwcwppi/v1/authorize' .'>CREATE AUTH TOKENS</a>';
-    // echo get_option('ntwcwppi_rest4');
+    echo '<textarea>' . get_option('ntwcwppi_rest') . '</textarea>';
+  }
+  
+  public function ntwcwppi_cleanUp()
+  {
+    foreach ($this->usedKeys as $key) {
+      delete_option($key);
+    }
   }
 }
