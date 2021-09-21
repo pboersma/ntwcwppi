@@ -48,22 +48,20 @@ class WP_ntwcwppi
   public function ntwcwppi_saveAuthorization()
   {
     $requiredFields = ['key_id', 'user_id', 'consumer_key', 'consumer_secret', 'key_permissions'];
+    $input = json_decode(file_get_contents('php://input'), true);
     $dataToStore = [];
 
-    foreach ($_POST as $key => $value) {
+    foreach ($input as $key => $value) {
       if (in_array($key, $requiredFields)) {
         $dataToStore[$key] = $value;
       }
     }
-
-    $dataToStore['TEST'] = file_get_contents('php://input');;
-
     // Skip storing the credentials to avoid clutter.
     if (empty($dataToStore)) {
       exit;
     }
 
-    add_option("ntwcwppi_rest3", json_encode($dataToStore));
+    add_option("ntwcwppi_rest4", json_encode($dataToStore));
   }
 
   public function ntwcwppi_addMenu()
@@ -83,6 +81,6 @@ class WP_ntwcwppi
     $ntwcwp_current_url = "https://$_SERVER[HTTP_HOST]" ;
 
     echo '<a href=' .  $ntwcwp_current_url . '/wp-json/ntwcwppi/v1/authorize' .'>CREATE AUTH TOKENS</a>';
-    echo get_option('ntwcwppi_rest3');
+    echo get_option('ntwcwppi_rest4');
   }
 }
