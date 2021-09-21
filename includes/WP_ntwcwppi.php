@@ -21,7 +21,7 @@ class WP_ntwcwppi
     //add_action( 'admin_menu', 'extra_post_info_menu' );
   }
 
-  private function ntwcwppi_createAuthTokens()
+  public function ntwcwppi_createAuthTokens()
   {
     var_dump('HERO');
     die;
@@ -42,7 +42,7 @@ class WP_ntwcwppi
     exit(wp_redirect($authentication_url));
   }
 
-  private function ntwcwppi_saveAuthorization()
+  public function ntwcwppi_saveAuthorization()
   {
     $requiredFields = ['key_id', 'user_id', 'consumer_key', 'consumer_secret', 'key_permissions'];
     $dataToStore = [];
