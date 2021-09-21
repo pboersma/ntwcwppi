@@ -11,7 +11,6 @@ class WP_ntwcwppi
 
   public function run()
   {
-    var_dump();
     register_activation_hook($this->plugin, array($this, 'ntwcwppi_createAuthTokens'));
 
     // // Register API Route for saving Authorization Token.
