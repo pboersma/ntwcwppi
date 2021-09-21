@@ -74,6 +74,8 @@ class WP_ntwcwppi
 
   public function ntwcwppi_createView()
   {
+    var_dump('HIER');
+    die;
     return "
     <h1>DIT IS EEN MENU PAGINA</h1>
     ";
