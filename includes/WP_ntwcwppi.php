@@ -17,7 +17,7 @@ class WP_ntwcwppi
     add_action('rest_api_init', function () {
       register_rest_route('ntwcwppi/v1', '/authorized', array(
         'methods' => 'POST',
-        'callback' => array($this, 'ntwcwppi_saveAuthorization'),
+        'callback' => $this->ntwcwppi_saveAuthorization(),
       ));
     });
 
