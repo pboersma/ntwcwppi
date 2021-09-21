@@ -62,7 +62,7 @@ class WP_ntwcwppi
 
   public function ntwcwppi_addMenu()
   {
-    add_menu(
+    add_menu_page(
       'NTWCWPPI', 
       'NTWCWPPI', 
       'ntwcwppi_product_import', 
