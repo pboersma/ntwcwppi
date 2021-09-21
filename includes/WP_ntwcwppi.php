@@ -13,21 +13,20 @@ class WP_ntwcwppi
   {
     register_activation_hook($this->plugin, array($this, 'ntwcwppi_createAuthTokens'));
 
-    // // Register API Route for saving Authorization Token.
-    // add_action('rest_api_init', function () {
-    //   register_rest_route('ntwcwppi/v1', '/authorized', array(
-    //     'methods' => 'POST',
-    //     'callback' => array($this, 'ntwcwppi_saveAuthorization'),
-    //   ));
-    // });
+    // Register API Route for saving Authorization Token.
+    add_action('rest_api_init', function () {
+      register_rest_route('ntwcwppi/v1', '/authorized', array(
+        'methods' => 'POST',
+        'callback' => array($this, 'ntwcwppi_saveAuthorization'),
+      ));
+    });
+
     // // CRUD Menu for Product Importer UI
     // //add_action( 'admin_menu', 'extra_post_info_menu' );
   }
 
   public function ntwcwppi_createAuthTokens()
   {
-    var_dump('HERO');
-    die;
     $ntwcwp_current_url = "https://$_SERVER[HTTP_HOST]";
 
     $endpoint = '/wc-auth/v1/authorize';
