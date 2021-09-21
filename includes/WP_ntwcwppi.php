@@ -2,8 +2,11 @@
 
 class WP_ntwcwppi
 {
-  public function run()
+  public function __construct()
   {
+    // Activation Hook
+    register_activation_hook(__FILE__, array($this, 'ntwcwppi_createAuthTokens'));
+
     // Register API Route for saving Authorization Token.
     add_action('rest_api_init', function () {
       register_rest_route('ntwcwppi/v1', '/authorized', array(
@@ -11,18 +14,17 @@ class WP_ntwcwppi
         'callback' => array($this, 'ntwcwppi_saveAuthorization'),
       ));
     });
-
-
-    // Activation Hook
-    register_activation_hook(__FILE__, array($this, 'ntwcwppi_createAuthTokens'));
-
-
+  }
+  public function run()
+  {
     // CRUD Menu for Product Importer UI
     //add_action( 'admin_menu', 'extra_post_info_menu' );
   }
 
   private function ntwcwppi_createAuthTokens()
   {
+    var_dump('HERO');
+    die;
     $ntwcwp_current_url = "https://$_SERVER[HTTP_HOST]";
 
     $endpoint = '/wc-auth/v1/authorize';
