@@ -65,8 +65,8 @@ class WP_ntwcwppi
     add_menu_page(
       'NTWCWPPI', 
       'NTWCWPPI', 
+      'edit_posts', 
       'ntwcwppi_product_import', 
-      'menu_slug', 
       array($this, 'ntwcwppi_createView'), 
       'dashicons-products'
     );
