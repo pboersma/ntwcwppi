@@ -12,9 +12,13 @@ class WP_ntwcwppi
   public function run()
   {
     add_action('rest_api_init', function () {
-      register_rest_route('ntwcwppi/v1', '/authorize', array(
+      register_rest_route('ntwcwppi/v1', '/authorized', array(
         'methods' => 'POST',
         'callback' => array($this, 'ntwcwppi_saveAuthorization'),
+      ));
+      register_rest_route('ntwcwppi/v1', '/authorize', array(
+        'methods' => 'GET',
+        'callback' => array($this, 'ntwcwppi_createAuthTokens'),
       ));
     });
 
@@ -74,10 +78,8 @@ class WP_ntwcwppi
 
   public function ntwcwppi_createView()
   {
-    var_dump('HIER');
-    die;
-    return "
-    <h1>DIT IS EEN MENU PAGINA</h1>
-    ";
+    $ntwcwp_current_url = "https://$_SERVER[HTTP_HOST]" ;
+
+    echo '<a href= ' .  $ntwcwp_current_url . '/wp-json/ntwcwppi/v1/authorize' .'>';
   }
 }
