@@ -50,8 +50,6 @@ class WP_ntwcwppi
 
   public function ntwcwppi_saveAuthorization()
   {
-    var_dump('HIEROPOOO');
-    die;
     $requiredFields = ['key_id', 'user_id', 'consumer_key', 'consumer_secret', 'key_permissions'];
     $dataToStore = [];
 
