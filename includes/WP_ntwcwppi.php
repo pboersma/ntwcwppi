@@ -84,9 +84,9 @@ class WP_ntwcwppi
     echo '
       <h1>Add Data Feed</h1>
       <form id="addDataFeed">
-        <input type="text" name="json-data-url" />
-        <input type="text" name="username" />
-        <input type="text" name="password" />
+        <input type="text" name="data-url" /><br/>
+        <input type="text" name="username" /><br/>
+        <input type="text" name="password" /><br/>
         <input type="submit" value="Add Datafeed" />
       </form>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -96,8 +96,8 @@ class WP_ntwcwppi
 
           var $form = $(this);
           
-          var serializedData = $form.serialize();
-          console.log(serializedData);
+          var data = JSON.stringify($form.serializeArray());
+          console.log(data);
         });
       </script>
     ';
