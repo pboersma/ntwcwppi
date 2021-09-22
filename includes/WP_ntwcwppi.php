@@ -133,8 +133,6 @@ class WP_ntwcwppi
       "consumer_key" => 'ck_017633af71b89b7f9f4cacf5785255b735762cd1',
       "consumer_secret" => 'cs_c285af7ea01bfa61e7bc11931342c318e0ea100b'
     ]);
-  
-    var_dump($service->listAllProducts());
 
     echo '
       <h1>Add Data Feed</h1>
@@ -158,6 +156,10 @@ class WP_ntwcwppi
     ';
 
     echo '<textarea>' . get_option('ntwcwppi_rest') . '</textarea>';
+
+    echo "<pre>";
+    var_dump($service->listAllProducts());
+    echo "</pre>";
   }
   
   public function ntwcwppi_cleanUp()
