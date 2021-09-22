@@ -23,8 +23,7 @@ class WooCommerceService {
 
     public function listAllProducts()
     {
-        var_dump($this->client);
-        $this->client->get('products');
+        return $this->client->get('products');
     }
 
 }
