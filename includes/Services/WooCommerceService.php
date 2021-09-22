@@ -11,7 +11,7 @@ class WooCommerceService {
     private $credentials;
     private $client;
 
-    public function __construct(object $credentials)
+    public function __construct($credentials)
     {
         $this->credentials = $credentials;
 

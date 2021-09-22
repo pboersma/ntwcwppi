@@ -1,5 +1,7 @@
 <?php
 
+use Services\WooCommerceService;
+
 class WP_ntwcwppi
 {
   private $plugin;
@@ -125,6 +127,13 @@ class WP_ntwcwppi
   {
     $ntwcwp_current_url = "https://$_SERVER[HTTP_HOST]" ;
     echo '<a href=' .  $ntwcwp_current_url . '/wp-json/ntwcwppi/v1/authorize' .'>CREATE AUTH TOKENS</a>';
+
+    $service = new WooCommerceService([
+      "consumer_key" => 'ck_017633af71b89b7f9f4cacf5785255b735762cd1',
+      "consumer_secret" => 'cs_c285af7ea01bfa61e7bc11931342c318e0ea100b'
+    ]);
+  
+    var_dump($service->listAllProducts());
 
     echo '
       <h1>Add Data Feed</h1>
