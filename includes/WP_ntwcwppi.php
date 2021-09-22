@@ -1,4 +1,5 @@
 <?php
+require 'Services/WooCommerceService.php';
 
 use Services\WooCommerceService;
 
