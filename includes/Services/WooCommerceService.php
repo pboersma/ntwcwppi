@@ -1,20 +1,13 @@
 <?php
-
-namespace Services;
-
-
 use Automattic\WooCommerce\Client;
 
 
 class WooCommerceService {
 
-    private $credentials;
     private $client;
 
     public function __construct($credentials)
     {
-        $this->credentials = $credentials;
-
         $this->client = new Client(
             "https://$_SERVER[HTTP_HOST]",
             $credentials['consumer_key'],
