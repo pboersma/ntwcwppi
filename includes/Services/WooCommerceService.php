@@ -1,4 +1,6 @@
 <?php
+namespace Services;
+
 use Automattic\WooCommerce\Client;
 
 
