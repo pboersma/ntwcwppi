@@ -1,6 +1,6 @@
 ( function() {
     var vm = new Vue({
-      el: document.querySelector('#mount'),
+      el: document.querySelector('#ntwcwppi_app'),
       mounted: function(){
         console.log("Hello Vue!");
       }
