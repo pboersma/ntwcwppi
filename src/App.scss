@@ -1,7 +1,4 @@
-.ntwcwppi_group {
-    background-color: red;
-}
-
-h1 {
-    background-color: blue !important;
-}
+/* ./src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

@@ -17085,16 +17085,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "ntwcwppi_group"
+  "class": "md:flex bg-gray-100 rounded-xl p-8 md:p-0"
 };
 
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", null, " VUE WERKT ", -1
-/* HOISTED */
-);
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"pt-6 md:p-8 text-center md:text-left space-y-4\"><blockquote><p class=\"text-lg font-semibold\"> “Tailwind CSS is the only framework that I&#39;ve seen scale on large teams. It’s easy to customize, adapts to any design, and the build size is tiny.” </p></blockquote><figcaption class=\"font-medium\"><div class=\"text-cyan-600\"> Sarah Dayan </div><div class=\"text-gray-500\"> Staff Engineer, Algolia </div></figcaption></div>", 1);
 
-var _hoisted_3 = [_hoisted_2];
 function render(_ctx, _cache) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, _hoisted_3);
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("figure", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <img class=\"w-32 h-32 md:w-48 md:h-auto md:rounded-none rounded-full mx-auto\" src=\"/sarah-dayan.jpg\" alt=\"\" width=\"384\" height=\"512\"> "), _hoisted_2]);
 }
 
 /***/ }),
