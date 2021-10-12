@@ -126,24 +126,13 @@ class WP_ntwcwppi
    */
   public function ntwcwppi_createView()
   {
-    echo plugin_dir_url( __FILE__ );
-    // echo '<div id="product_import_dashboard"></div>'
 
-    // add_action('admin_enqueue_scripts', function ($hook) {
-    //   // only load scripts on dashboard
-    //   // if ($hook != 'index.php') {
-    //   //   return;
-    //   // }
-    //   if (in_array($_SERVER['REMOTE_ADDR'], array('10.255.0.2', '::1'))) {
-    //     // DEV React dynamic loading
-    //     $js_to_load = 'http://localhost:3000/static/js/bundle.js';
-    //   } else {
-    //     $js_to_load = plugin_dir_url( __FILE__ ) . 'ghost-inspector.js';
-    //     $css_to_load = plugin_dir_url( __FILE__ ) . 'ghost-inspector.css';
-    //   }
-    //   wp_enqueue_style('ghost_inspector_css', $css_to_load);
-    //   wp_enqueue_script('ghost_inspector_js', $js_to_load, '', mt_rand(10,1000), true);
-    // });
+    add_action('admin_enqueue_scripts', function ($hook) {
+      wp_enqueue_script('vue', 'https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js', mt_rand(10,1000), true);
+    });
+
+
+
     // $ntwcwp_current_url = "https://$_SERVER[HTTP_HOST]" ;
     // echo '<a href=' .  $ntwcwp_current_url . '/wp-json/ntwcwppi/v1/authorize' .'>CREATE AUTH TOKENS</a>';
 
