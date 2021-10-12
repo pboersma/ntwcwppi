@@ -126,40 +126,58 @@ class WP_ntwcwppi
    */
   public function ntwcwppi_createView()
   {
-    $ntwcwp_current_url = "https://$_SERVER[HTTP_HOST]" ;
-    echo '<a href=' .  $ntwcwp_current_url . '/wp-json/ntwcwppi/v1/authorize' .'>CREATE AUTH TOKENS</a>';
+    echo plugin_dir_url( __FILE__ );
+    // echo '<div id="product_import_dashboard"></div>'
 
-    $service = new WooCommerceService([
-      "consumer_key" => 'ck_017633af71b89b7f9f4cacf5785255b735762cd1',
-      "consumer_secret" => 'cs_c285af7ea01bfa61e7bc11931342c318e0ea100b'
-    ]);
+    // add_action('admin_enqueue_scripts', function ($hook) {
+    //   // only load scripts on dashboard
+    //   // if ($hook != 'index.php') {
+    //   //   return;
+    //   // }
+    //   if (in_array($_SERVER['REMOTE_ADDR'], array('10.255.0.2', '::1'))) {
+    //     // DEV React dynamic loading
+    //     $js_to_load = 'http://localhost:3000/static/js/bundle.js';
+    //   } else {
+    //     $js_to_load = plugin_dir_url( __FILE__ ) . 'ghost-inspector.js';
+    //     $css_to_load = plugin_dir_url( __FILE__ ) . 'ghost-inspector.css';
+    //   }
+    //   wp_enqueue_style('ghost_inspector_css', $css_to_load);
+    //   wp_enqueue_script('ghost_inspector_js', $js_to_load, '', mt_rand(10,1000), true);
+    // });
+    // $ntwcwp_current_url = "https://$_SERVER[HTTP_HOST]" ;
+    // echo '<a href=' .  $ntwcwp_current_url . '/wp-json/ntwcwppi/v1/authorize' .'>CREATE AUTH TOKENS</a>';
 
-    echo '
-      <h1>Add Data Feed</h1>
-      <form id="addDataFeed">
-        <input type="text" name="data-url" /><br/>
-        <input type="text" name="username" /><br/>
-        <input type="text" name="password" /><br/>
-        <input type="submit" value="Add Datafeed" />
-      </form>
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-      <script>
-        $("#addDataFeed").submit(function(event){
-          event.preventDefault();
+    // $service = new WooCommerceService([
+    //   "consumer_key" => 'ck_017633af71b89b7f9f4cacf5785255b735762cd1',
+    //   "consumer_secret" => 'cs_c285af7ea01bfa61e7bc11931342c318e0ea100b'
+    // ]);
 
-          var $form = $(this);
+    // echo '
+    //   <h1>Add Data Feed</h1>
+    //   <form id="addDataFeed">
+    //     <input type="text" name="data-url" /><br/>
+    //     <input type="text" name="username" /><br/>
+    //     <input type="text" name="password" /><br/>
+    //     <input type="submit" value="Add Datafeed" />
+    //   </form>
+    //   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    //   <script>
+    //     $("#addDataFeed").submit(function(event){
+    //       event.preventDefault();
+
+    //       var $form = $(this);
           
-          var data = JSON.parse(JSON.stringify($form.serializeArray()))
-          console.log(data);
-        });
-      </script>
-    ';
+    //       var data = JSON.parse(JSON.stringify($form.serializeArray()))
+    //       console.log(data);
+    //     });
+    //   </script>
+    // ';
 
-    echo '<textarea>' . get_option('ntwcwppi_rest') . '</textarea>';
+    // echo '<textarea>' . get_option('ntwcwppi_rest') . '</textarea>';
 
-    echo "<pre>";
-    var_dump($service->listAllProducts());
-    echo "</pre>";
+    // echo "<pre>";
+    // var_dump($service->listAllProducts());
+    // echo "</pre>";
   }
   
   public function ntwcwppi_cleanUp()
