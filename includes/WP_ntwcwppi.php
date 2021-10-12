@@ -128,7 +128,7 @@ class WP_ntwcwppi
   {
     echo "<div id='ntwcwppi_app'> </div>";
     wp_enqueue_script('ntwcwppi_app-vue', plugin_dir_url( __FILE__ ) . 'Frontend/App.js', [], '1.0', true);
-    wp_enqueue_style('ntwcwppi_app-styling', plugin_dir_url( __FILE__ ) . 'Frontend/App.css', [], '1.0', true);
+    wp_enqueue_style('ntwcwppi_app-styling', plugin_dir_url( __FILE__ ) . 'Frontend/App.css', [], '1.0', 'all');
 
     // $ntwcwp_current_url = "https://$_SERVER[HTTP_HOST]" ;
     // echo '<a href=' .  $ntwcwp_current_url . '/wp-json/ntwcwppi/v1/authorize' .'>CREATE AUTH TOKENS</a>';
