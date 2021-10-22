@@ -1,4 +1,18 @@
-/* ./src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+.tab {
+    @apply text-gray-600 py-4 px-6 block
+}
+
+.active {
+    @apply text-blue-500 border-b-2 font-medium border-blue-500
+}
+
+
+.table_heading {
+    @apply px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider
+}

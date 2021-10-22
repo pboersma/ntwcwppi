@@ -3,7 +3,6 @@ namespace Services;
 
 use Automattic\WooCommerce\Client;
 
-
 class WooCommerceService {
 
     private $client;

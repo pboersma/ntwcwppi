@@ -1,22 +1,58 @@
 <template>
-    <figure class="md:flex bg-gray-100 rounded-xl p-8 md:p-0">
-  <!-- <img class="w-32 h-32 md:w-48 md:h-auto md:rounded-none rounded-full mx-auto" src="/sarah-dayan.jpg" alt="" width="384" height="512"> -->
-  <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
-    <blockquote>
-      <p class="text-lg font-semibold">
-        “Tailwind CSS is the only framework that I've seen scale
-        on large teams. It’s easy to customize, adapts to any design,
-        and the build size is tiny.”
-      </p>
-    </blockquote>
-    <figcaption class="font-medium">
-      <div class="text-cyan-600">
-        Sarah Dayan
+  <div class="container">
+    <h1 class="text-2xl mb-6 mt-6">Product Importer</h1>
+    <div class="bg-white">
+      <nav class="flex flex-col sm:flex-row">
+        <button
+          v-on:click="changePage('products')"
+          class="tab hover:text-blue-500 focus:outline-none"
+          :class="{ active: currentPage === 'products' }"
+        >
+          Products
+        </button>
+        <button
+          v-on:click="changePage('jobs')"
+          class="tab hover:text-blue-500 focus:outline-none"
+          :class="{ active: currentPage === 'jobs' }"
+        >
+          Jobs
+        </button>
+        <button
+          v-on:click="changePage('data-sources')"
+          class="tab hover:text-blue-500 focus:outline-none"
+          :class="{ active: currentPage === 'data-sources' }"
+        >
+          Data Sources
+        </button>
+      </nav>
+      <div class="p-5">
+        <data-sources v-if="currentPage === 'data-sources'"></data-sources>
+        <div v-if="currentPage === 'products'">
+          <h1>PRODUCTS</h1>
+        </div>
+        <div v-if="currentPage === 'jobs'">
+          <h1>JOBS</h1>
+        </div>
       </div>
-      <div class="text-gray-500">
-        Staff Engineer, Algolia
-      </div>
-    </figcaption>
+    </div>
   </div>
-</figure>
 </template>
+<script>
+import DataSources from "./Pages/DataSources.vue";
+
+export default {
+  components: {
+    DataSources,
+  },
+  data() {
+    return {
+      currentPage: "products"
+    };
+  },
+  methods: {
+    changePage(page) {
+      this.currentPage = page;
+    },
+  },
+};
+</script>
