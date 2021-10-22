@@ -27,9 +27,7 @@
       </nav>
       <div class="p-5">
         <data-sources v-if="currentPage === 'data-sources'"></data-sources>
-        <div v-if="currentPage === 'products'">
-          <h1>PRODUCTS</h1>
-        </div>
+        <products v-if="currentPage === 'products'"></products>
         <div v-if="currentPage === 'jobs'">
           <h1>JOBS</h1>
         </div>
@@ -39,10 +37,12 @@
 </template>
 <script>
 import DataSources from "./Pages/DataSources.vue";
+import Products from "./Pages/Products.vue";
 
 export default {
   components: {
     DataSources,
+    Products
   },
   data() {
     return {

@@ -60,6 +60,13 @@ class WP_ntwcwppi
         'methods' => 'POST',
         'callback' => array($this, 'ntwcwppi_addProduct'),
       ));
+
+      register_rest_route( 'ntwcwppi/v1', '/products/list', array(
+        'methods' => 'GET',
+        'callback' => array($this, 'ntwcpwppi_listProducts'),
+      ));
+
+
     });
 
     // CRUD Menu for Product Importer UI
@@ -297,6 +304,27 @@ class WP_ntwcwppi
 
   public function ntwcpwppi_listProducts()
   {
+    global $wpdb;
 
+    if(!isset($_GET['productListLimit'])) {
+      $productListLimit = 10;
+    } else {
+      $productListLimit = $_GET['productListLimit'];
+    }
+
+    if (isset($_GET['page'])) {
+      $pageno = $_GET['page'];
+    } else {
+      $pageno = 1;
+    }
+
+    $offset = ($pageno-1) * $productListLimit; 
+    $totalOfProducts = $wpdb->get_var("SELECT COUNT(*) FROM wp_ntwcwppi_products");
+    $totalOfPages = ceil($totalOfProducts/$productListLimit);
+
+    return [
+      "totalPages" => $totalOfPages,
+      "products" => $wpdb->get_results("SELECT * FROM wp_ntwcwppi_products LIMIT $offset, $productListLimit")
+    ];
   }
 }
