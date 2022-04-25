@@ -1,0 +1,43 @@
+[
+ {
+     "route": "/authorized",
+     "methods": "POST",
+     "callback": "ntwcwppi_saveAuthorization"
+ },
+ {
+    "route": "/authorize",
+    "methods": "GET",
+    "callback": "ntwcwppi_createAuthTokens",
+    "class": "WP_ntwcwppiAuth"
+ },
+ {
+    "route": "/datasources/create",
+    "methods": "GET",
+    "callback": "ntwcwppi_createDataSource"
+ },
+ {
+    "route": "/datasources/list",
+    "methods": "GET",
+    "callback": "ntwcwppi_listDataSources"
+ },
+ {
+    "route": "/test",
+    "methods": "GET",
+    "callback": "ntwcwppi_createDatabaseTables"
+ },
+ {
+    "route": "/products/add",
+    "methods": "POST",
+    "callback": "ntwcwppi_addProduct"
+ },
+ {
+    "route": "/products/list",
+    "methods": "GET",
+    "callback": "ntwcpwppi_listProducts"
+ },
+ {
+    "route": "/wc/products/attributes/list",
+    "methods": "GET",
+    "callback": "ntwcwppi_listWCProductAttributes"
+ }
+]

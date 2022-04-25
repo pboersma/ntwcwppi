@@ -25,4 +25,13 @@ class WooCommerceService {
         return $this->client->get('products');
     }
 
+    public function listProductAttributes()
+    {
+        return $this->client->get('products/attributes');
+    }
+
+    public function createProduct($attributes)
+    {
+        // $this
+    }
 }

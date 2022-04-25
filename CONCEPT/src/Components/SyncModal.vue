@@ -7,9 +7,6 @@
             <i class="fas fa-times"></i>
           </button>
         </div>
-        <base-progress :percentage="20" class="mx-2 mb-2 h-5">
-          <span class="text-xs text-white w-full flex justify-end pr-2">{{20}}%</span>
-        </base-progress>
         <div class="flex flex-col px-6 py-5 bg-gray-50 h-96 overflow-y-scroll">
           <p  class="font-bold" v-for="product in productQueu" v-bind:key="product.id">{{ product.message }}</p>
         </div>
@@ -26,62 +23,61 @@
 </template>
 <script>
 import axios from 'axios';
-import BaseProgress from "./BaseProgress";
 
 export default {
     props: ['isOpen'],
-    components: {
-      BaseProgress
-    },
+    components: {},
     data() {
         return {
             currentPage: "products",
             modalOpen: false,
             productQueu: [],
             products: [],
-            contentProgress: 20
         };
     },
     methods: {
-        onClickButton (event) {
-            this.$emit('clicked', 'someValue')
+        /**
+         * Clickbutton Event for closing Modal.
+         */
+        onClickButton(event) {
+          this.$emit("clicked", "someValue");
         },
+        /**
+         * Sync Datasource.
+         *
+         * @returns {void}
+         */
         async syncDatasource () {
           var self = this;
-          var lengthOfList = null;
+          let currentId = 0;
 
-          await this.productQueu.push({id: 1, message: "Starting Sync"}); 
+          // Start Sync
+          this.productQueu.push({id: currentId++, message: "Starting Sync"}); 
 
           // Make a request for a user with a given ID
+          // @TODO: Change URL to datasources/get to get Datasource Credentials & URL
           await axios.get('https://lycan-media.nl/wp-json/ntwcwppi/v1/datasources/create')
           .then(async function (response) {
-            await self.productQueu.push({id: 2, message: "Retrieved Data from Data Source"}); 
+            self.productQueu.push({id: currentId++, message: "Retrieved Data from Data Source"}); 
             self.products = response.data;
           })
           .catch(async function (error) {
-            await self.productQueu.push({id: 3, message: "Sync Failed " + error}); 
+            self.productQueu.push({id: currentId++, message: "Sync Failed " + error}); 
           });
 
-          await this.productQueu.push({id: 4, message: "Importing Products into NTWCWPPI"})
-          
-          let currentId = 5;
+          // @TODO: Check if Products already exist
 
+          // Start Import into WP Database.
+          this.productQueu.push({id: currentId++, message: "Importing Products into NTWCWPPI"})
+
+          // Map Product Data & Push mapped products into WP Database
           this.products.map(async function(value, key){
             await axios.post('https://lycan-media.nl/wp-json/ntwcwppi/v1/products/add', { data_source_id: 1, data: value })
             .then(async function (response) {
-              await currentId++
-              await self.productQueu.push({id: currentId, message: value.Productnaam_NL})
+              currentId++
+              self.productQueu.push({id: currentId++, message: value.Productnaam_NL})
             })
           })
-          // for(product in this.products) {
-          //   await console.log(product);
-          //   // await axios.post('https://lycan-media.nl/wp-json/ntwcwppi/v1/products/add', { data_source_id: 1, data: product })
-          //   // .then(async function (response) {
-          //   //   await currentId++
-          //   //   await self.productQueu.push({id: currentId, message: product})
-          //   // })
-          // }
-
         }
   }
 };

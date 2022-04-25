@@ -35,9 +35,14 @@
               </p>
             </td>
             <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-              <button v-on:click="openModal()" class="flex font-bold mr-6">
+              <div class="flex">
+              <button v-on:click="openModal('sync')" class="font-bold mr-6">
                 <i class="fas fa-sync"></i>
               </button>
+              <button v-on:click="openModal('map')" class="font-bold mr-6">
+                <i class="fas fa-map"></i>
+              </button>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -46,35 +51,52 @@
     <sync-modal
       class="fixed w-full"
       @clicked="closeModal()"
-      :isOpen="modalOpen"
+      :isOpen="( currentModal === 'sync' && modalOpen)"
     ></sync-modal>
+    <map-modal
+      class="fixed w-full"
+      @clicked="closeModal()"
+      :isOpen="( currentModal === 'map' && modalOpen)"
+    ></map-modal>
   </div>
 </template>
 <script>
 import SyncModal from '../Components/SyncModal.vue';
+import MapModal from '../Components/MapModal.vue';
+
 export default {
   components: {
-    SyncModal
+    SyncModal,
+    MapModal
   },
   data() {
     return {
+      currentModal: null,
       modalOpen: false,
-      dataSources: [
-        {
-          name: "De Eekhoorn",
-          source: "https://deeekhoorn.com/nl/feed/products/json",
-          authentication: true
-        },
-      ],
+      dataSources: null
     };
   },
   methods: {
-    openModal() {
+    openModal(modal) {
+      this.currentModal = modal;
       this.modalOpen = true;
     },
     closeModal() {
+      this.currentModal = null;
       this.modalOpen = false;
     },
+    async fetchDataSources() {
+      await axios.get('https://lycan-media.nl/wp-json/ntwcwppi/v1/datasources')
+        .then(response => {
+          this.dataSources = response.data;
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+  },
+  mounted() {
+    // this.dataSources = 
   },
 };
 </script>

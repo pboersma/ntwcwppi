@@ -13,6 +13,8 @@ class WP_ntwcwppi
     'ntwcwppi_rest'
   ];
 
+  private $routesFile = 'Config/routes.json';
+
   public function __construct($plugin)
   {
    $this->plugin = $plugin;
@@ -26,47 +28,28 @@ class WP_ntwcwppi
   public function run()
   {
     add_action('rest_api_init', function () {
-      /**
-       * Authorization Callback URL for storing auth token.
-       *
-       * @TODO: permission_callback setup
-       */
-      register_rest_route('ntwcwppi/v1', '/authorized', array(
-        'methods' => 'POST',
-        'callback' => array($this, 'ntwcwppi_saveAuthorization'),
-      ));
 
-      /**
-       * Authorize Rest API URL through WooCommerce.
-       *
-       * @TODO: permission_callback setup
-       */
-      register_rest_route('ntwcwppi/v1', '/authorize', array(
-        'methods' => 'GET',
-        'callback' => array($this, 'ntwcwppi_createAuthTokens'),
-      ));
+      register_rest_route(
+        'ntwcwppi/v1',
+        'tester',
+        [
+          'methods' => 'GET',
+          'callback' => ['Classes\\ntwcwppiAuthorization', 'test']
+        ]
+      );
 
-      register_rest_route( 'ntwcwppi/v1', '/datasources/create', array(
-        'methods' => 'GET',
-        'callback' => array($this, 'ntwcwppi_createDataSource'),
-      ));
+      // $routes = json_decode(file_get_contents($this->routesFile, true), true);
 
-      register_rest_route( 'ntwcwppi/v1', '/test', array(
-        'methods' => 'GET',
-        'callback' => array($this, 'ntwcwppi_createDatabaseTables'),
-      ));
-
-      register_rest_route( 'ntwcwppi/v1', '/products/add', array(
-        'methods' => 'POST',
-        'callback' => array($this, 'ntwcwppi_addProduct'),
-      ));
-
-      register_rest_route( 'ntwcwppi/v1', '/products/list', array(
-        'methods' => 'GET',
-        'callback' => array($this, 'ntwcpwppi_listProducts'),
-      ));
-
-
+      // foreach($routes as $route) {
+      //   register_rest_route(
+      //     'ntwcwppi/v1',
+      //     $route['route'],
+      //     [
+      //       'methods' => $route['methods'],
+      //       'callback' => [$this, $route['callback']]
+      //     ]
+      //   );
+      // }
     });
 
     // CRUD Menu for Product Importer UI
@@ -154,41 +137,6 @@ class WP_ntwcwppi
     wp_enqueue_script('ntwcwppi_app-vue', plugin_dir_url( __FILE__ ) . 'Frontend/App.js', [], '1.0', true);
     wp_enqueue_style('ntwcwppi_app-styling', plugin_dir_url( __FILE__ ) . 'Frontend/App.css', [], '1.0', 'all');
     wp_enqueue_style('ntwcwppi_font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css', [], '1.0', 'all');
-
-    // $ntwcwp_current_url = "https://$_SERVER[HTTP_HOST]" ;
-    // echo '<a href=' .  $ntwcwp_current_url . '/wp-json/ntwcwppi/v1/authorize' .'>CREATE AUTH TOKENS</a>';
-
-    // $service = new WooCommerceService([
-    //   "consumer_key" => 'ck_017633af71b89b7f9f4cacf5785255b735762cd1',
-    //   "consumer_secret" => 'cs_c285af7ea01bfa61e7bc11931342c318e0ea100b'
-    // ]);
-
-    // echo '
-    //   <h1>Add Data Feed</h1>
-    //   <form id="addDataFeed">
-    //     <input type="text" name="data-url" /><br/>
-    //     <input type="text" name="username" /><br/>
-    //     <input type="text" name="password" /><br/>
-    //     <input type="submit" value="Add Datafeed" />
-    //   </form>
-    //   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    //   <script>
-    //     $("#addDataFeed").submit(function(event){
-    //       event.preventDefault();
-
-    //       var $form = $(this);
-          
-    //       var data = JSON.parse(JSON.stringify($form.serializeArray()))
-    //       console.log(data);
-    //     });
-    //   </script>
-    // ';
-
-    // echo '<textarea>' . get_option('ntwcwppi_rest') . '</textarea>';
-
-    // echo "<pre>";
-    // var_dump($service->listAllProducts());
-    // echo "</pre>";
   }
   
   public function ntwcwppi_cleanUp()
@@ -198,6 +146,34 @@ class WP_ntwcwppi
     }
   }
 
+  public function ntwcwppi_createDatabaseTables()
+  {
+    global $wpdb;
+
+    $table_name = $wpdb->prefix . "ntwcwppi_datasources";
+
+    // $wpdb->insert($table_name, [
+    //   'data_source_id' => 1,
+    //   'data' => json_encode([
+    //     "test" => "hallo"
+    //   ])
+    //   ]);
+
+    $sql = "CREATE TABLE $table_name (
+      id mediumint(9) NOT NULL AUTO_INCREMENT,
+      name varchar(255) NOT NULL,
+      basic varchar(255) NOT NULL,
+      url varchar(255) NOT NULL,
+      PRIMARY KEY  (id)
+    );";
+
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $sql );
+
+    // return $wpdb->prefix . "ntwcwppi_products"; 
+  }
+
+  // -----------------DATASOURCES-----------------------------------------------
   public function ntwcwppi_createDataSource()
   {
     $client = new Client();
@@ -237,48 +213,31 @@ class WP_ntwcwppi
     // // add_option("ntwcwppi_rest", json_encode($dataToStore));
   }
 
-  public function ntwcwppi_getDataFromDataSource()
-  {
-
-  }
-
-  public function ntwcwppi_createDatabaseTables()
+  public function ntwcwppi_listDataSources()
   {
     global $wpdb;
+    $dataSources = $wpdb->get_results("SELECT * FROM wp_ntwcwppi_datasources;");
 
-    $table_name = $wpdb->prefix . "ntwcwppi_datasources";
+    if (!$dataSources) {
+      return [
+        "status" => "OK",
+        "message" => "No data sources found",
+        "payload" => []
+      ];
+    }
 
-    // $wpdb->insert($table_name, [
-    //   'data_source_id' => 1,
-    //   'data' => json_encode([
-    //     "test" => "hallo"
-    //   ])
-    //   ]);
-
-    $sql = "CREATE TABLE $table_name (
-      id mediumint(9) NOT NULL AUTO_INCREMENT,
-      name varchar(255) NOT NULL,
-      basic varchar(255) NOT NULL,
-      url varchar(255) NOT NULL,
-      PRIMARY KEY  (id)
-    );";
-
-    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-    dbDelta( $sql );
-
-    // return $wpdb->prefix . "ntwcwppi_products"; 
+    return $dataSources;
   }
 
+  // -----------------PRODUCTS-----------------------------------------------
   public function ntwcwppi_addProduct()
   {
     global $wpdb;
 
     $table_name = $wpdb->prefix . "ntwcwppi_products";
-    
 
     // GET INPUT
     $input = json_decode(file_get_contents('php://input'), true);
-
 
     // CHECK IF PAYLOAD INCLUDED REQUIRED DATA_SOURCE_ID
     if(!$input['data_source_id']){
@@ -295,11 +254,6 @@ class WP_ntwcwppi
       ]);
 
     return $wpdb->insert_id;
-  }
-
-  public function ntwcwpp_updateProduct()
-  {
-
   }
 
   public function ntwcpwppi_listProducts()
@@ -326,5 +280,15 @@ class WP_ntwcwppi
       "totalPages" => $totalOfPages,
       "products" => $wpdb->get_results("SELECT * FROM wp_ntwcwppi_products LIMIT $offset, $productListLimit")
     ];
+  }
+
+  public function ntwcwppi_listWCProductAttributes()
+  {
+    $service = new WooCommerceService([
+      "consumer_key" => 'ck_017633af71b89b7f9f4cacf5785255b735762cd1',
+      "consumer_secret" => 'cs_c285af7ea01bfa61e7bc11931342c318e0ea100b'
+    ]);
+
+    return $service->listProductAttributes();
   }
 }

@@ -12,7 +12,7 @@
  * Version:           1.0.0
  **/
 
-require 'vendor/autoload.php';
+include_once  __DIR__ . '/vendor/autoload.php';
 require 'includes/WP_ntwcwppi.php';
 
 $plugin = new WP_ntwcwppi( __FILE__ );
